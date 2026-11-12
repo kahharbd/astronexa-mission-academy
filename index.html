@@ -5,760 +5,1250 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ASTRONEXA Mission Academy | Lunar & Martian Outpost Trainer</title>
   
-  <!-- Professional Certificate & UI Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
   <style>
+    :root {
+      --space-blue: #0b3d91;
+      --mars-orange: #ea580c;
+      --neon-cyan: #38bdf8;
+      --safe-green: #22c55e;
+      --alert-red: #ef4444;
+      --bg-dark: #030712;
+      --card-bg: rgba(15, 23, 42, 0.94);
+    }
+
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: radial-gradient(circle at top, #1e1b4b, #030712);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Kalpurush", "Hind Siliguri", "SutonnyMJ", Arial, sans-serif;
+      background: radial-gradient(ellipse at bottom, #1e1b4b 0%, #030712 100%);
       color: #f8fafc;
       text-align: center;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow-x: hidden;
+      position: relative;
     }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        radial-gradient(1.5px 1.5px at 25px 35px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 85px 145px, #93c5fd, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 155px 65px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 225px 185px, #fed7aa, rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 280px 280px;
+      opacity: 0.35;
+      animation: starTwinkle 7s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes starTwinkle {
+      0% { opacity: 0.25; transform: scale(1); }
+      100% { opacity: 0.45; transform: scale(1.02); }
+    }
+
     header {
-      padding: 22px 15px 14px;
-      background: rgba(3, 7, 18, 0.92);
-      border-bottom: 2px solid #f97316;
-      box-shadow: 0 4px 25px rgba(249, 115, 22, 0.2);
+      position: relative;
+      z-index: 10;
+      padding: 18px 20px 14px;
+      background: rgba(3, 7, 18, 0.95);
+      border-bottom: 2px solid var(--mars-orange);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 4px 25px rgba(234, 88, 12, 0.2);
     }
+    .brand { text-align: center; margin-bottom: 8px; }
     h1 {
       margin: 0;
-      font-size: 2rem;
-      letter-spacing: 2px;
-      color: #f97316;
+      font-size: 1.55rem;
+      letter-spacing: 1.5px;
+      color: #fb923c;
       text-transform: uppercase;
       font-weight: 800;
-      text-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+      text-shadow: 0 0 15px rgba(251, 146, 60, 0.35);
     }
     .tagline {
       color: #94a3b8;
-      font-size: 0.85rem;
-      margin-top: 5px;
-      letter-spacing: 1px;
+      font-size: 0.8rem;
+      margin-top: 3px;
+      letter-spacing: 0.5px;
     }
-    .badge {
-      display: inline-block;
-      background: #431407;
-      color: #fdba74;
-      border: 1px solid #c2410c;
-      padding: 3px 12px;
-      border-radius: 12px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      margin-top: 8px;
-      text-transform: uppercase;
-    }
-
-    /* Top Progress Bar */
-    .progress-container {
-      width: 100%;
-      max-width: 800px;
-      margin: 12px auto 0;
-      background: #1e293b;
-      height: 8px;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 25%;
-      background: linear-gradient(90deg, #ea580c, #38bdf8);
-      transition: width 0.4s ease-in-out;
-      box-shadow: 0 0 10px #f97316;
-    }
-
-    .nav-tabs {
+    .header-actions {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
       gap: 10px;
-      margin: 18px 15px;
+      align-items: center;
+      margin-top: 6px;
+      flex-wrap: wrap;
     }
-    .tab-btn {
+    .btn-secondary {
       background: #0f172a;
-      color: #94a3b8;
-      border: 1px solid #334155;
-      padding: 10px 18px;
-      border-radius: 20px;
-      cursor: pointer;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
       font-weight: 700;
-      font-size: 0.82rem;
-      transition: all 0.3s ease;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .tab-btn.active {
-      background: #f97316;
+    .btn-secondary:hover {
+      background: #38bdf8;
       color: #030712;
-      border-color: #f97316;
-      box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    }
+    .btn-lang {
+      background: #431407;
+      border: 1px solid #f97316;
+      color: #fdba74;
+    }
+    .btn-lang:hover {
+      background: #f97316;
+      color: #fff;
+    }
+
+    .steps-nav {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 18px 15px 10px;
+      flex-wrap: wrap;
+    }
+    .step-pill {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #64748b;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: not-allowed;
+      transition: all 0.3s;
+    }
+    .step-pill.unlocked {
+      color: #94a3b8;
+      cursor: pointer;
+      border-color: #475569;
+    }
+    .step-pill.active {
+      background: var(--mars-orange);
+      color: #fff;
+      border-color: var(--mars-orange);
+      box-shadow: 0 0 15px rgba(234, 88, 12, 0.4);
+      cursor: default;
     }
 
     .container {
-      max-width: 800px;
+      position: relative;
+      z-index: 5;
+      max-width: 840px;
       margin: 0 auto;
-      padding: 0 15px 30px;
+      padding: 10px 15px 30px;
       width: 100%;
     }
-    .module-card {
-      display: none;
-      background: rgba(15, 23, 42, 0.85);
+    .card {
+      background: var(--card-bg);
       border: 1px solid #334155;
       border-radius: 16px;
-      padding: 24px 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      padding: 24px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(10px);
+      animation: fadeIn 0.35s ease-out;
     }
-    .module-card.active { display: block; animation: slideUp 0.35s ease-out; }
-    @keyframes slideUp {
+    @keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    h2 { margin-top: 0; color: #fdba74; font-size: 1.35rem; }
-    .desc { color: #94a3b8; font-size: 0.88rem; margin-bottom: 20px; line-height: 1.5; }
+    h2 { margin-top: 0; color: #fdba74; font-size: 1.3rem; }
+    .plain-note { color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin-bottom: 20px; }
 
-    /* Module 1: Outpost Architecture Selection */
+    .welcome-box { padding: 30px 20px; }
+    .welcome-title {
+      font-size: 1.8rem;
+      color: #f97316;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+    .welcome-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+      max-width: 600px;
+      margin: 0 auto 25px;
+    }
+
     .grid-options {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 12px;
       margin-bottom: 15px;
     }
     .gear-card {
       background: #1e293b;
       border: 1px solid #334155;
-      padding: 14px 12px;
+      padding: 14px;
       border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s ease;
       text-align: left;
+      transition: all 0.2s;
     }
-    .gear-card:hover { border-color: #f97316; transform: translateY(-2px); }
+    .gear-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
     .gear-card.selected-correct {
       border-color: #22c55e;
-      background: rgba(34, 197, 94, 0.15);
+      background: rgba(34, 197, 94, 0.18);
       pointer-events: none;
     }
     .gear-card.selected-wrong {
       border-color: #ef4444;
-      background: rgba(239, 68, 68, 0.15);
+      background: rgba(239, 68, 68, 0.18);
+      animation: shake 0.35s;
     }
-    .feedback-log {
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      margin-top: 15px;
-      display: none;
-      font-weight: 600;
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
     }
 
-    /* Module 2: The Core Challenge (Balancing Competing Demands) */
-    .dashboard-panel {
+    .feedback-box {
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 15px;
+      display: none;
+      text-align: left;
+      line-height: 1.45;
+    }
+
+    .hud-console {
       background: #020617;
       border: 1px solid #38bdf8;
       border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
+      padding: 18px;
+      margin-bottom: 18px;
+      text-align: left;
       box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.08);
     }
-    .telemetry-header {
-      font-family: 'Share Tech Mono', monospace;
+    .telemetry-bar {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       color: #38bdf8;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       border-bottom: 1px dashed #334155;
       padding-bottom: 8px;
-    }
-    .power-grid-box {
-      background: #0f172a;
-      padding: 10px 15px;
-      border-radius: 8px;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid #f97316;
+      flex-wrap: wrap;
+      gap: 6px;
     }
-    .subsystem-slider-row {
-      display: grid;
-      grid-template-columns: 140px 1fr 50px;
+    .live-beacon {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      margin-right: 4px;
+      animation: pulseGreen 1.5s infinite;
+    }
+    @keyframes pulseGreen {
+      0% { opacity: 0.3; transform: scale(0.9); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+      100% { opacity: 0.3; transform: scale(0.9); }
+    }
+    .sync-btn {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sync-btn:hover { background: #38bdf8; color: #020617; }
+
+    .power-status-bar {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      background: #0f172a;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      border: 1px solid var(--mars-orange);
+    }
+    .slider-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 65px;
+      align-items: center;
+      gap: 10px;
       margin: 12px 0;
-      text-align: left;
       font-size: 0.85rem;
     }
     input[type=range] {
       width: 100%;
-      accent-color: #f97316;
+      accent-color: var(--mars-orange);
       cursor: pointer;
     }
-    .status-meter-grid {
+    .meter-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
-    .meter-card {
+    .meter-tile {
       background: #1e293b;
-      padding: 10px 5px;
+      padding: 10px 4px;
       border-radius: 8px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-align: center;
       border: 1px solid #334155;
     }
-    .meter-val {
-      font-size: 1rem;
-      font-weight: 800;
-      margin-top: 4px;
+    .meter-val { font-size: 1rem; font-weight: 800; margin-top: 3px; }
+
+    .btn-action {
+      background: linear-gradient(90deg, #ea580c, #f97316);
+      color: #fff;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(234, 88, 12, 0.35);
+    }
+    .btn-action:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(234, 88, 12, 0.5);
+    }
+    .btn-action:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
     }
 
-    /* Module 3: Crisis Decision */
-    .crisis-box {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid #ef4444;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-      text-align: left;
-    }
-    .crisis-title {
-      color: #f87171;
-      font-weight: 800;
-      font-size: 1.05rem;
-      display: flex;
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      padding: 20px;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
     }
-    .decision-btn {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #f8fafc;
-      padding: 12px 15px;
-      margin: 8px 0;
-      border-radius: 8px;
+    .modal-box {
+      background: #0b132b;
+      border: 1px solid #38bdf8;
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 600px;
       width: 100%;
       text-align: left;
-      cursor: pointer;
-      font-size: 0.88rem;
-      transition: background 0.2s;
+      max-height: 85vh;
+      overflow-y: auto;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      line-height: 1.6;
     }
-    .decision-btn:hover { background: #334155; border-color: #f97316; }
 
-    #nameModal {
-      display: none;
-      background: #0b132b;
-      border: 2px solid #f97316;
-      border-radius: 12px;
-      padding: 25px;
-      margin: 20px auto;
-      max-width: 480px;
-      box-shadow: 0 0 25px rgba(249, 115, 22, 0.25);
-    }
-    .input-box {
-      width: 85%;
-      padding: 12px 16px;
-      border-radius: 8px;
-      border: 1px solid #fdba74;
-      background: #020617;
+    .diploma-frame {
+      background: #081120;
+      border: 10px solid #d4af37;
+      outline: 2px solid #854d0e;
+      outline-offset: -5px;
+      padding: 30px 40px;
+      border-radius: 10px;
       color: #fff;
-      font-size: 1.05rem;
-      margin-bottom: 15px;
-      outline: none;
-      text-align: center;
+      margin-top: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.25);
+      position: relative;
     }
-
-    /* Official Certificate Layout */
-    #certificateWrapper {
-      display: none;
-      margin-top: 20px;
-    }
-    .cert-frame {
-      background: #060d1a;
-      border: 12px solid #d4af37;
-      outline: 3px solid #f59e0b;
-      outline-offset: -7px;
-      padding: 35px 45px;
-      border-radius: 14px;
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.25);
-      text-align: center;
-      color: #ffffff;
-    }
-    .cert-badge-icon {
-      font-size: 2.5rem;
-      margin-bottom: 4px;
-      filter: drop-shadow(0 0 10px #f59e0b);
-    }
-    .cert-header {
-      font-family: 'Cinzel', serif;
-      font-size: 1.85rem;
-      font-weight: 800;
-      letter-spacing: 3px;
-      color: #ffd700;
-      margin: 0;
-      text-transform: uppercase;
-    }
-    .cert-sub-header {
-      font-size: 0.82rem;
-      letter-spacing: 2px;
-      color: #94a3b8;
-      margin-top: 5px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .cert-presents {
-      font-size: 0.92rem;
-      font-style: italic;
-      color: #cbd5e1;
-      margin-top: 18px;
-    }
-    .cert-name {
-      font-family: 'Cinzel', serif;
+    .diploma-crest {
       font-size: 2.2rem;
-      font-weight: 700;
-      color: #38bdf8;
-      margin: 10px auto;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      border-bottom: 2px solid rgba(212, 175, 55, 0.5);
+      margin-bottom: 2px;
       display: inline-block;
-      padding: 0 30px 6px;
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
     }
-    .cert-statement {
-      font-size: 0.92rem;
+    .diploma-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: #ffd700;
+      letter-spacing: 1px;
+      margin: 4px 0 2px;
+    }
+    .diploma-subtitle {
+      font-size: 0.82rem;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .diploma-certify {
+      margin: 18px 0 4px;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+    .diploma-name {
+      font-size: 2.4rem;
+      color: #38bdf8;
+      font-weight: 800;
+      margin: 8px auto 14px;
+      border-bottom: 2px solid rgba(212, 175, 55, 0.6);
+      display: inline-block;
+      padding: 0 30px 4px;
+      letter-spacing: 1px;
+    }
+    .diploma-statement {
+      font-size: 0.96rem;
       color: #e2e8f0;
       line-height: 1.65;
       max-width: 680px;
-      margin: 10px auto 22px;
+      margin: 0 auto 20px;
     }
-    .cert-signatures {
+    .diploma-signatures {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       border-top: 1px dashed rgba(212, 175, 55, 0.4);
-      padding-top: 16px;
-      margin-top: 12px;
+      padding-top: 14px;
+      margin-top: 15px;
       font-size: 0.8rem;
     }
-    .sig-block { text-align: center; width: 170px; }
-    .sig-line {
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
+    .sig-col { text-align: center; width: 180px; }
+    .sig-script {
+      font-family: "Brush Script MT", "Segoe Script", cursive, sans-serif;
+      font-size: 1.25rem;
       color: #ffd700;
-      border-bottom: 1px solid #64748b;
-      padding-bottom: 4px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
-    .sig-title { font-size: 0.72rem; color: #94a3b8; }
-
-    .action-btn {
-      background: #ea580c;
-      color: #fff;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
+    .sig-line {
+      border-top: 1px solid #64748b;
+      padding-top: 4px;
       font-weight: 700;
-      cursor: pointer;
-      font-size: 0.92rem;
-      transition: background 0.2s;
+      color: #f1f5f9;
+      font-size: 0.75rem;
     }
-    .action-btn:hover { background: #c2410c; }
+    .diploma-disclaimer {
+      font-size: 0.68rem;
+      color: #94a3b8;
+      margin-top: 18px;
+      font-style: italic;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+      padding-top: 8px;
+    }
 
     footer {
+      position: relative;
+      z-index: 5;
       background: #020617;
       border-top: 1px solid #1e293b;
-      padding: 20px 15px;
-      font-size: 0.78rem;
+      padding: 14px;
+      font-size: 0.72rem;
       color: #64748b;
+      line-height: 1.5;
     }
-    footer a { color: #f97316; text-decoration: none; font-weight: 600; }
 
-    /* ====================================================
-       STRICT A4 LANDSCAPE PRINT & PDF SETUP
-       ==================================================== */
-    @page { size: A4 landscape; margin: 8mm; }
+    @page { 
+      size: A4 landscape; 
+      margin: 8mm; 
+    }
     @media print {
       body, html {
+        background: #ffffff !important;
+        color: #000000 !important;
         margin: 0 !important;
         padding: 0 !important;
-        background: #060d1a !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         width: 100% !important;
         height: 100% !important;
       }
-      header, .nav-tabs, footer, .progress-container,
-      #module0, #module1, #nameModal, .action-btn,
-      .module-card h2, .module-card .desc, #crisisCard, #quizChoices {
+      body::before, header, .steps-nav, footer, .btn-action, #step0, #step1, #step2, #step3Input, #crisisControls {
         display: none !important;
       }
-      .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
-      .module-card { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; }
-      #certificateWrapper { display: block !important; margin: 0 !important; padding: 0 !important; }
-      .cert-frame {
+      .container { 
+        max-width: 100% !important; 
+        margin: 0 !important; 
+        padding: 0 !important; 
+      }
+      #step3 { 
+        display: block !important; 
+        padding: 0 !important; 
+        border: none !important; 
+        background: transparent !important; 
+        box-shadow: none !important; 
+      }
+      #step3Diploma { 
+        display: block !important; 
+        margin: 0 !important; 
+        padding: 0 !important; 
+      }
+      .diploma-frame {
         width: 100% !important;
         height: 94vh !important;
         margin: 0 auto !important;
-        padding: 30px 45px !important;
-        border: 12px solid #b8860b !important;
-        outline: 3px solid #854d0e !important;
-        outline-offset: -7px !important;
-        border-radius: 8px !important;
-        background: #060d1a !important;
+        padding: 24px 35px !important;
+        border: 10px solid #1e293b !important;
+        outline: 3px solid #64748b !important;
+        outline-offset: -6px !important;
+        border-radius: 6px !important;
+        background: #fafaf9 !important;
+        color: #0f172a !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
         box-sizing: border-box !important;
+        box-shadow: none !important;
       }
-      .cert-header { font-size: 2.2rem !important; color: #ffd700 !important; }
-      .cert-name { font-size: 2.7rem !important; color: #38bdf8 !important; margin: 12px auto !important; }
-      .cert-statement { font-size: 1rem !important; max-width: 750px !important; color: #f1f5f9 !important; }
-      .cert-signatures { font-size: 0.9rem !important; border-top: 1px dashed #b8860b !important; padding-top: 12px !important; }
-      .sig-line { color: #ffd700 !important; }
+      .diploma-crest { filter: grayscale(1) !important; }
+      .diploma-title { font-size: 2.1rem !important; color: #091e42 !important; font-weight: 900 !important; }
+      .diploma-subtitle { color: #334155 !important; font-weight: 700 !important; }
+      .diploma-certify { color: #334155 !important; }
+      .diploma-name { 
+        font-size: 2.8rem !important; 
+        color: #091e42 !important; 
+        margin: 10px auto 14px !important; 
+        border-bottom: 2px solid #091e42 !important;
+        font-weight: 900 !important;
+      }
+      .diploma-statement { font-size: 1rem !important; color: #1e293b !important; line-height: 1.7 !important; }
+      .diploma-signatures { border-top: 1px dashed #64748b !important; }
+      .sig-script { color: #091e42 !important; }
+      .sig-line { border-top: 1px solid #091e42 !important; color: #0f172a !important; }
+      .diploma-disclaimer { font-size: 0.72rem !important; color: #475569 !important; border-top: 1px solid #cbd5e1 !important; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>ASTRONEXA MISSION ACADEMY</h1>
-    <div class="tagline">Junior Astronaut Mission Trainer • NASA Space Apps Challenge 2026</div>
-    <div class="badge">Lunar & Martian Outpost Command Simulator</div>
-    <div class="progress-container">
-      <div class="progress-bar" id="progressBar"></div>
+    <div class="brand">
+      <h1 data-i18n="appTitle">ASTRONEXA Mission Academy</h1>
+      <div class="tagline" data-i18n="appTagline">Junior Astronaut Mission Trainer • NASA Space Apps Challenge 2026</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-secondary btn-lang" id="langToggleBtn" onclick="toggleLanguage()">🌐 বাংলা সংস্করণ</button>
+      <button class="btn-secondary" onclick="openModal('aboutModal')" data-i18n="btnAbout">ℹ️ NASA Data & Intel</button>
+      <button class="btn-secondary" onclick="openModal('aiModal')" data-i18n="btnAi">🤖 AI Disclosure</button>
     </div>
   </header>
 
-  <div class="nav-tabs">
-    <button class="tab-btn active" id="btn0" onclick="switchModule(0)">1. Outpost Architecture</button>
-    <button class="tab-btn" id="btn1" onclick="switchModule(1)">2. Resource Trade-off Engine</button>
-    <button class="tab-btn" id="btn2" onclick="switchModule(2)">3. Command Crisis & Diploma</button>
+  <div class="steps-nav" id="stepsNav" style="display:none;">
+    <div class="step-pill active" id="pill1" onclick="setStep(1)" data-i18n="pill1">1. Outpost Setup</div>
+    <div class="step-pill" id="pill2" onclick="setStep(2)" data-i18n="pill2">2. Power Balancing</div>
+    <div class="step-pill" id="pill3" onclick="setStep(3)" data-i18n="pill3">3. Solar Storm Command</div>
   </div>
 
   <div class="container">
     
-    <!-- MODULE 1: OUTPOST ARCHITECTURE & LIFE SUPPORT -->
-    <div class="module-card active" id="module0">
-      <h2>Module 1: Lunar/Martian Outpost Configuration</h2>
-      <div class="desc">
-        Running an extraterrestrial base requires specific engineering systems. Select <b>all 3 critical subsystems</b> to initialize life support before deployment:
+    <div class="card welcome-box" id="step0">
+      <div style="font-size: 3rem; margin-bottom: 10px;">🚀</div>
+      <div class="welcome-title" data-i18n="welcomeTitle">Welcome Cadet Commander!</div>
+      <div class="welcome-text" data-i18n="welcomeText">
+        Humanity is establishing its first permanent outpost on Mars.<br>
+        Your mission is to balance critical life support, power budgets, and radiation shields using real NASA environmental data. Can you keep the crew alive?
       </div>
-
-      <div class="grid-options">
-        <div class="gear-card" onclick="selectGear(this, true, 'Sintered Regolith Shielding - Essential for cosmic radiation & micrometeorite protection.')">
-          🛡️ <b>Regolith Radiation Shield</b><br><small style="color:#94a3b8;">Surface Radiation Barrier</small>
-        </div>
-        <div class="gear-card" onclick="selectGear(this, false, 'Standard Earth Greenhouse - Glass will shatter under micro-meteorites and thin atmosphere.')">
-          🏡 <b>Standard Earth Greenhouse</b><br><small style="color:#94a3b8;">Terrestrial Fragile Structure</small>
-        </div>
-        <div class="gear-card" onclick="selectGear(this, true, 'Fission Surface Nuclear Power Unit - Delivers continuous baseline kilowatt power through 14-day lunar nights.')">
-          ⚡ <b>Nuclear Kilopower Generator</b><br><small style="color:#94a3b8;">Continuous Baseline Energy</small>
-        </div>
-        <div class="gear-card" onclick="selectGear(this, false, 'Open Air Diesel Generator - Combustion impossible without atmospheric free oxygen.')">
-          ⛽ <b>Diesel Engine Generator</b><br><small style="color:#94a3b8;">Combustion Engine (Fails)</small>
-        </div>
-        <div class="gear-card" onclick="selectGear(this, true, 'Hydroponic Algae & Crop Bioreactor - Produces closed-loop oxygen and food biomass.')">
-          🌱 <b>Closed-Loop Hydroponic Bay</b><br><small style="color:#94a3b8;">Food & O2 Bioreactor</small>
-        </div>
-        <div class="gear-card" onclick="selectGear(this, false, 'Imported Food Cans Only - Unviable for long-duration deep space outposts.')">
-          🥫 <b>Ration Supply Cans</b><br><small style="color:#94a3b8;">Non-renewable Logistics</small>
-        </div>
-      </div>
-
-      <div id="gearFeedback" class="feedback-log"></div>
-      <div id="gearProgress" style="margin-top:10px; font-weight:700; color:#fdba74;">Subsystems Initialized: 0 / 3</div>
+      <button class="btn-action" style="font-size:1.05rem; padding:14px 34px;" onclick="startCadetMission()" data-i18n="startBtn">
+        START CADET MISSION ➔
+      </button>
     </div>
 
-    <!-- MODULE 2: COMPETING DEMANDS & TRADE-OFF SIMULATOR -->
-    <div class="module-card" id="module1">
-      <h2>Module 2: Real-Time Resource Balancing Engine</h2>
-      <div class="desc">
-        <b>Engineering Trade-offs:</b> Total Outpost Power is strictly limited (100 kW). Distribute power among competing subsystems. Every slider decision impacts crew survival!
+    <div class="card" id="step1" style="display:none;">
+      <h2 data-i18n="step1Title">Step 1: Outpost Architecture Setup</h2>
+      <div class="plain-note" data-i18n="step1Note">
+        Earth machinery cannot operate in space! Select <b>all 3 verified technologies</b> to initialize life support:
       </div>
 
-      <div class="dashboard-panel">
-        <div class="telemetry-header">
-          <span>📡 BASE TELEMETRY: MARS JEZERO OUTPOST</span>
-          <span id="marsWeatherVal">Syncing NASA Mars Data...</span>
-        </div>
+      <div class="grid-options" id="subsystemGrid"></div>
 
-        <div class="power-grid-box">
-          <span style="font-weight:700; color:#fdba74;">AVAILABLE POWER GRID:</span>
-          <span style="font-family:'Share Tech Mono', monospace; font-size:1.15rem; font-weight:bold;" id="powerStatus">100 kW / 100 kW</span>
-        </div>
-
-        <!-- Competing Demands Sliders -->
-        <div class="subsystem-slider-row">
-          <span>🫁 Life Support (O2):</span>
-          <input type="range" id="o2Slider" min="10" max="60" value="35" oninput="balanceResources()">
-          <b id="o2Val">35 kW</b>
-        </div>
-
-        <div class="subsystem-slider-row">
-          <span>🛡️ Radiation Shield:</span>
-          <input type="range" id="shieldSlider" min="10" max="60" value="35" oninput="balanceResources()">
-          <b id="shieldVal">35 kW</b>
-        </div>
-
-        <div class="subsystem-slider-row">
-          <span>🌱 Food Growth Bay:</span>
-          <input type="range" id="foodSlider" min="10" max="60" value="30" oninput="balanceResources()">
-          <b id="foodVal">30 kW</b>
-        </div>
-
-        <!-- Resulting Station Metrics -->
-        <div class="status-meter-grid">
-          <div class="meter-card">
-            <div>Oxygen Level</div>
-            <div class="meter-val" id="o2Meter" style="color:#22c55e;">98%</div>
-          </div>
-          <div class="meter-card">
-            <div>Radiation Def.</div>
-            <div class="meter-val" id="shieldMeter" style="color:#22c55e;">95%</div>
-          </div>
-          <div class="meter-card">
-            <div>Food Yield</div>
-            <div class="meter-val" id="foodMeter" style="color:#22c55e;">90%</div>
-          </div>
-          <div class="meter-card">
-            <div>Outpost Status</div>
-            <div class="meter-val" id="baseMeter" style="color:#22c55e;">OPTIMAL</div>
-          </div>
-        </div>
-      </div>
-
-      <div id="simLog" style="font-size:0.9rem; font-weight:600; color:#38bdf8; margin-bottom:18px;">
-        ⚖️ Balance power perfectly to keep all systems above 70% threshold.
-      </div>
-
-      <button class="action-btn" id="lockTradeoffBtn" style="padding:12px 25px;" onclick="switchModule(2)">Lock Balance & Enter Command Crisis ➔</button>
+      <div id="subsystemLog" class="feedback-box"></div>
+      <div id="subsystemCount" style="margin-top:12px; font-weight:700; color:#fdba74;">Subsystems Initialized: 0 / 3</div>
     </div>
 
-    <!-- MODULE 3: COMMAND CRISIS & CERTIFICATION -->
-    <div class="module-card" id="module2">
-      <h2>Module 3: Flight Director Crisis Examination</h2>
-      <div class="desc">Every mission faces life-or-death decisions. Choose the optimal trade-off during this emergency:</div>
+    <div class="card" id="step2" style="display:none;">
+      <h2 data-i18n="step2Title">Step 2: 100 kW Surface Reactor Balancing Engine</h2>
+      <div class="plain-note" data-i18n="step2Note">
+        <b>Real Engineering Constraint:</b> Reactor capacity is strictly capped at <b>100 kW</b>. Giving more power to one system robs another!
+      </div>
 
-      <div id="crisisCard">
-        <div class="crisis-box">
-          <div class="crisis-title">⚠️ EMERGENCY ALERT: INTENSE SOLAR PARTICLE EVENT (SPE)</div>
-          <p style="font-size:0.88rem; color:#cbd5e1; margin-top:8px; line-height:1.5;">
-            Lethal solar radiation is peaking at 450 mSv/hr. The outpost solar arrays are damaged, cutting auxiliary power. How do you re-balance systems to save the outpost?
-          </p>
+      <div class="hud-console">
+        <div class="telemetry-bar">
+          <div>
+            <span class="live-beacon"></span>
+            <span data-i18n="siteLabel">📡 MARS ELYSIUM PLANITIA</span>
+            <span id="marsLiveClock" style="color:#fdba74; font-weight:bold; margin-left:6px;">SOL 500 • 14:24:08 MTC</span>
+          </div>
+          <div>
+            <span id="marsDynamicTelemetry" style="color:#38bdf8; margin-right:8px;">Temp -63.1°C | Press 721 Pa | 591 W/m²</span>
+            <button class="sync-btn" onclick="syncNASAData()" title="Sync Telemetry">🔄 Sync</button>
+          </div>
         </div>
 
-        <div id="crisisChoices">
-          <button class="decision-btn" onclick="resolveCrisis(false, 'Fatal Trade-off! Life Support depowered completely; crew suffocation detected.')">
-            A) Cut 100% of Life Support power to boost agricultural heat lamps.
-          </button>
-          <button class="decision-btn" onclick="resolveCrisis(true, 'Optimal Engineering Trade-off! Crops can survive 48hrs in dark; radiation shield deflected lethal storm!')">
-            B) Divert food bay power into electromagnetic radiation shields while maintaining minimal life support.
-          </button>
-          <button class="decision-btn" onclick="resolveCrisis(false, 'Radiation Shield Failed! Crew exposed to fatal solar cosmic dose.')">
-            C) Depower radiation shielding entirely to keep all crop growth lamps at maximum.
-          </button>
+        <div class="power-status-bar">
+          <span style="font-weight:700; color:#fdba74;" data-i18n="gridDemandLabel">SURFACE POWER DEMAND:</span>
+          <span style="font-family:monospace; font-size:1.15rem; font-weight:bold;" id="gridDemand">100 kW / 100 kW</span>
+        </div>
+
+        <div class="slider-row">
+          <span data-i18n="sO2">🫁 Life Support (O2):</span>
+          <input type="range" id="o2Slider" min="10" max="60" value="35" oninput="runGridSimulation()">
+          <b id="o2Kw">35 kW</b>
+        </div>
+
+        <div class="slider-row">
+          <span data-i18n="sShield">🛡️ Radiation Shield:</span>
+          <input type="range" id="shieldSlider" min="10" max="60" value="35" oninput="runGridSimulation()">
+          <b id="shieldKw">35 kW</b>
+        </div>
+
+        <div class="slider-row">
+          <span data-i18n="sFood">🌱 Food Growth Bay:</span>
+          <input type="range" id="foodSlider" min="10" max="60" value="30" oninput="runGridSimulation()">
+          <b id="foodKw">30 kW</b>
+        </div>
+
+        <div class="meter-grid">
+          <div class="meter-tile">
+            <div data-i18n="mO2">Oxygen Output</div>
+            <div class="meter-val" id="o2Meter" style="color:#22c55e;">88%</div>
+          </div>
+          <div class="meter-tile">
+            <div data-i18n="mShield">Radiation Def.</div>
+            <div class="meter-val" id="shieldMeter" style="color:#22c55e;">88%</div>
+          </div>
+          <div class="meter-tile">
+            <div data-i18n="mFood">Crop Biomass</div>
+            <div class="meter-val" id="foodMeter" style="color:#22c55e;">84%</div>
+          </div>
+          <div class="meter-tile">
+            <div data-i18n="mStatus">Grid Status</div>
+            <div class="meter-val" id="gridStatus" style="color:#22c55e;">OPTIMAL</div>
+          </div>
         </div>
       </div>
 
-      <!-- In-App Name Input Screen -->
-      <div id="nameModal">
-        <h3 style="color:#ffd700; font-family:'Cinzel', serif; font-size:1.4rem; margin-top:0;">🌟 OUTPOST MISSION ACCOMPLISHED! 🌟</h3>
-        <p style="font-size:0.95rem; color:#cbd5e1;">Enter Cadet Name for Official Lunar & Martian Base Commander Diploma:</p>
-        <input type="text" id="cadetNameInput" class="input-box" placeholder="e.g. Commander Kahhar" />
+      <div id="gridAdvice" style="font-size:0.88rem; font-weight:600; color:#38bdf8; margin-bottom:16px;">
+        ⚖️ Keep power at exactly 100 kW. All individual systems must stay between 80%–95% for safe operation.
+      </div>
+
+      <button class="btn-action" id="step2NextBtn" onclick="goToEmergencyCrisis()" data-i18n="step2Btn">
+        Confirm Trade-off & Enter Emergency Mission ➔
+      </button>
+    </div>
+
+    <div class="card" id="step3" style="display:none;">
+      <div id="crisisControls">
+        <h2 data-i18n="step3Title">Step 3: Solar Storm Emergency Re-balancing</h2>
+        <div class="plain-note" data-i18n="step3Note">
+          <b>Live Crisis Event:</b> Auxiliary arrays failed! Emergency battery is capped at <b>50 kW max</b>. You must re-balance to keep oxygen and shields active!
+        </div>
+
+        <div class="hud-console" style="border-color:#ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);">
+          <div class="telemetry-bar" style="color:#f87171;">
+            <span>⚠️ NASA DONKI EVENT #2024-05-11T02:00:00-SEP-001</span>
+            <span data-i18n="crisisFlux">FLUX: S2 SOLAR PROTON STORM</span>
+          </div>
+
+          <div class="power-status-bar" style="border-color:#ef4444;">
+            <span style="font-weight:700; color:#f87171;" data-i18n="crisisGridLabel">EMERGENCY BATTERY GRID:</span>
+            <span style="font-family:monospace; font-size:1.15rem; font-weight:bold;" id="emergencyDemand">50 kW / 50 kW</span>
+          </div>
+
+          <div class="slider-row">
+            <span data-i18n="sO2">🫁 Life Support (O2):</span>
+            <input type="range" id="eO2" min="5" max="35" value="20" oninput="runCrisisSimulation()">
+            <b id="eO2Kw">20 kW</b>
+          </div>
+
+          <div class="slider-row">
+            <span data-i18n="sShield">🛡️ Radiation Shield:</span>
+            <input type="range" id="eShield" min="5" max="35" value="25" oninput="runCrisisSimulation()">
+            <b id="eShieldKw">25 kW</b>
+          </div>
+
+          <div class="slider-row">
+            <span data-i18n="sFood">🌱 Food Growth Bay:</span>
+            <input type="range" id="eFood" min="0" max="25" value="5" oninput="runCrisisSimulation()">
+            <b id="eFoodKw">5 kW</b>
+          </div>
+
+          <div id="crisisStatusText" style="padding:10px; border-radius:6px; background:#1e293b; font-size:0.85rem; font-weight:700; color:#4ade80;"></div>
+        </div>
+
+        <button class="btn-action" id="crisisSaveBtn" onclick="resolveCrisisSuccess()" data-i18n="crisisBtn">
+          Lock Crisis Configuration & Verify Survival ➔
+        </button>
+      </div>
+
+      <div id="step3Input" style="display:none; margin-top:20px;">
+        <h3 style="color:#ffd700; margin-bottom:8px;" data-i18n="inputTitle">🌟 MISSION SUCCESS! YOU SAVED THE OUTPOST! 🌟</h3>
+        <p style="font-size:0.9rem; color:#cbd5e1;" data-i18n="inputSub">Enter your name to generate your Commander Flight Diploma:</p>
+        <input type="text" id="cadetName" class="btn-secondary" style="font-size:1rem; padding:10px 16px; width:80%; max-width:320px; text-align:center; margin-bottom:12px; background:#020617; color:#fff;" placeholder="Commander Kahhar" />
         <br>
-        <button class="action-btn" style="background:#22c55e; font-weight:800;" onclick="generateCertificate()">Generate Commander Diploma 🚀</button>
+        <button class="btn-action" onclick="renderOfficialDiploma()" data-i18n="genDipBtn">Generate Official Diploma 🎓</button>
       </div>
 
-      <!-- International Certificate Layout with Both Signatures -->
-      <div id="certificateWrapper">
-        <div class="cert-frame">
+      <div id="step3Diploma" style="display:none;">
+        <div class="diploma-frame">
           <div>
-            <div class="cert-badge-icon">🏛️</div>
-            <h3 class="cert-header">OUTPOST COMMAND DIPLOMA</h3>
-            <div class="cert-sub-header">ASTRONEXA MISSION ACADEMY • NASA SPACE APPS CHALLENGE 2026</div>
-          </div>
-
-          <div>
-            <div class="cert-presents">This official credential certifies that</div>
-            <div class="cert-name" id="certCadetName">CADET COMMANDER</div>
-            <div class="cert-statement">
-              has demonstrated superior engineering trade-off mastery in balancing competing demands—including closed-loop life support, regolith radiation shielding, kilowatt power grids, and bio-regenerative food production —ensuring successful outpost survival.
+            <div class="diploma-crest">🏛️</div>
+            <div class="diploma-title" data-i18n="dipHeader">OUTPOST COMMAND DIPLOMA</div>
+            <div class="diploma-subtitle" data-i18n="dipSub">
+              ASTRONEXA MISSION ACADEMY • NASA SPACE APPS CHALLENGE 2026
             </div>
           </div>
 
-          <!-- Dual Signatures Block -->
-          <div class="cert-signatures">
-            <div class="sig-block">
-              <div class="sig-line">ASTRONEXA-OUTPOST-2026</div>
-              <div class="sig-title">Verification Code</div>
+          <div>
+            <div class="diploma-certify" data-i18n="dipCertify">
+              This certifies that Cadet Commander
             </div>
-            <div class="sig-block">
-              <div class="sig-line">Dhaka, Bangladesh</div>
-              <div class="sig-title">Global Event Location</div>
-            </div>          
-            <div class="sig-block">
-              <div class="sig-line">Kurrat Abdul Kahhar</div>
-              <div class="sig-title">Team Lead, ASTRONEXA</div>
+            <div class="diploma-name" id="dispCadetName">CADET COMMANDER</div>
+
+            <div class="diploma-statement" data-i18n="dipBody">
+              has mastered extraterrestrial engineering trade-offs — balancing closed-loop life support, regolith radiation shielding, and fission kilowatt power grids under live Mars InSight and NASA DONKI space weather constraints.
+            </div>
+          </div>
+
+          <div>
+            <div class="diploma-signatures">
+              <div class="sig-col">
+                <div class="sig-script">Flight Director</div>
+                <div class="sig-line" data-i18n="sig1">FLIGHT DIRECTOR</div>
+              </div>
+              <div class="sig-col">
+                <div style="font-weight:700; color:#38bdf8; font-size:0.85rem; margin-bottom:4px;">Dhaka, Bangladesh</div>
+                <div class="sig-line" data-i18n="sig2">GLOBAL EVENT LOCATION</div>
+              </div>
+              <div class="sig-col">
+                <div class="sig-script">Kurrat Abdul Kahhar</div>
+                <div class="sig-line" data-i18n="sig3">TEAM LEADERSHIP</div>
+              </div>
+            </div>
+
+            <div class="diploma-disclaimer" data-i18n="dipDisclaimer">
+              * Simulated Educational Credential • NASA Space Apps Challenge 2026 Submission • Not an official government certification.
             </div>
           </div>
         </div>
 
-        <div style="margin-top: 25px;">
-          <button class="action-btn" style="background:#22c55e; font-size:1rem; padding:12px 30px; box-shadow:0 0 15px rgba(34,197,94,0.4);" onclick="window.print()">🖨️ Print / Download PDF</button>
-        </div>
+        <button class="btn-action" style="margin-top:20px; background:#22c55e;" onclick="window.print()" data-i18n="printBtn">
+          🖨️ Print / Save as PDF
+        </button>
       </div>
 
     </div>
 
   </div>
 
+  <div class="modal-overlay" id="aboutModal" onclick="closeModal('aboutModal')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <h3 style="color:#38bdf8; margin-top:0;" data-i18n="modalDataTitle">📡 NASA Open Data & Science Intel</h3>
+      <p data-i18n="modalDataP">This simulator uses genuine NASA mission telemetry baselines rather than fabricated figures:</p>
+      <ul id="modalDataList"></ul>
+      <button class="btn-secondary" style="margin-top:10px;" onclick="closeModal('aboutModal')" data-i18n="closeBtn">Close Intel Panel</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="aiModal" onclick="closeModal('aiModal')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <h3 style="color:#fdba74; margin-top:0;" data-i18n="modalAiTitle">🤖 Official AI Disclosure Statement</h3>
+      <p data-i18n="modalAiP">In accordance with NASA Space Apps Challenge 2026 regulations and mentor guidelines:</p>
+      <ul id="modalAiList"></ul>
+      <button class="btn-secondary" style="margin-top:10px;" onclick="closeModal('aiModal')" data-i18n="closeBtn">Close AI Disclosure</button>
+    </div>
+  </div>
+
   <footer>
-    <div style="font-weight:700; color:#f8fafc; margin-bottom:6px;">NASA OPEN DATA VERIFICATION & CHALLENGE ALIGNMENT:</div>
-    • Challenge Topic: <a href="https://www.spaceappschallenge.org" target="_blank">Build a Junior Astronaut Mission Trainer (Outpost Ops)</a><br>
-    • NASA Mars InSight Weather API: <a href="https://api.nasa.gov/" target="_blank">api.nasa.gov (InSight / Curiosity Data)</a><br>
-    • NASA Advanced Life Support Baseline Values: <a href="https://www.nasa.gov" target="_blank">nasa.gov/spec-outpost</a><br>
-    <div style="margin-top:8px; color:#f8fafc; font-style:italic;">Team ASTRONEXA — "Connecting Today's Ideas with Tomorrow's Discoveries"</div>
+    <b data-i18n="footCite">NASA OPEN DATA CITATIONS:</b> NASA InSight TWINS Mars Archive • NASA DONKI SEP Space Weather Database • NASA FSP 40–100 kW Architecture<br>
+    Team ASTRONEXA • "Build a Junior Astronaut Mission Trainer" • NASA Space Apps Challenge 2026
   </footer>
 
   <script>
-    let currentModule = 0;
+    let currentLang = 'en';
 
-    function setProgress(percent) {
-      document.getElementById('progressBar').style.width = percent + '%';
+    const I18N = {
+      en: {
+        toggleBtn: "🌐 বাংলা সংস্করণ",
+        appTitle: "ASTRONEXA Mission Academy",
+        appTagline: "Junior Astronaut Mission Trainer • NASA Space Apps Challenge 2026",
+        btnAbout: "ℹ️ NASA Data & Intel",
+        btnAi: "🤖 AI Disclosure",
+        pill1: "1. Outpost Setup",
+        pill2: "2. Power Balancing",
+        pill3: "3. Solar Storm Command",
+        welcomeTitle: "Welcome Cadet Commander!",
+        welcomeText: "Humanity is establishing its first permanent outpost on Mars.<br>Your mission is to balance critical life support, power budgets, and radiation shields using real NASA environmental data. Can you keep the crew alive?",
+        startBtn: "START CADET MISSION ➔",
+        step1Title: "Step 1: Outpost Architecture Setup",
+        step1Note: "Earth machinery cannot operate in space! Select <b>all 3 verified technologies</b> to initialize life support:",
+        subCount: "Subsystems Initialized: ",
+        step2Title: "Step 2: 100 kW Surface Reactor Balancing Engine",
+        step2Note: "<b>Real Engineering Constraint:</b> Reactor capacity is strictly capped at <b>100 kW</b>. Giving more power to one system robs another!",
+        siteLabel: "📡 MARS ELYSIUM PLANITIA",
+        gridDemandLabel: "SURFACE POWER DEMAND:",
+        sO2: "🫁 Life Support (O2):",
+        sShield: "🛡️ Radiation Shield:",
+        sFood: "🌱 Food Growth Bay:",
+        mO2: "Oxygen Output",
+        mShield: "Radiation Def.",
+        mFood: "Crop Biomass",
+        mStatus: "Grid Status",
+        step2Btn: "Confirm Trade-off & Enter Emergency Mission ➔",
+        step3Title: "Step 3: Solar Storm Emergency Re-balancing",
+        step3Note: "<b>Live Crisis Event:</b> Auxiliary arrays failed! Emergency battery is capped at <b>50 kW max</b>. You must re-balance to keep oxygen and shields active!",
+        crisisFlux: "FLUX: S2 SOLAR PROTON STORM",
+        crisisGridLabel: "EMERGENCY BATTERY GRID:",
+        crisisBtn: "Lock Crisis Configuration & Verify Survival ➔",
+        inputTitle: "🌟 MISSION SUCCESS! YOU SAVED THE OUTPOST! 🌟",
+        inputSub: "Enter your name to generate your Commander Flight Diploma:",
+        genDipBtn: "Generate Official Diploma 🎓",
+        dipHeader: "OUTPOST COMMAND DIPLOMA",
+        dipSub: "ASTRONEXA MISSION ACADEMY • NASA SPACE APPS CHALLENGE 2026",
+        dipCertify: "This certifies that Cadet Commander",
+        dipBody: "has mastered extraterrestrial engineering trade-offs — balancing closed-loop life support, regolith radiation shielding, and fission kilowatt power grids under live Mars InSight and NASA DONKI space weather constraints.",
+        sig1: "FLIGHT DIRECTOR",
+        sig2: "GLOBAL EVENT LOCATION",
+        sig3: "TEAM LEADERSHIP",
+        dipDisclaimer: "* Simulated Educational Credential • NASA Space Apps Challenge 2026 Submission • Not an official government certification.",
+        printBtn: "🖨️ Print / Save as PDF",
+        modalDataTitle: "📡 NASA Open Data & Science Intel",
+        modalDataP: "This simulator uses genuine NASA mission telemetry baselines rather than fabricated figures:",
+        modalAiTitle: "🤖 Official AI Disclosure Statement",
+        modalAiP: "In accordance with NASA Space Apps Challenge 2026 regulations and mentor guidelines:",
+        closeBtn: "Close",
+        footCite: "NASA OPEN DATA CITATIONS:"
+      },
+      bn: {
+        toggleBtn: "🌐 English Version",
+        appTitle: "অ্যাস্ট্রনেক্সা মিশন একাডেমি",
+        appTagline: "জুনিয়র অ্যাস্ট্রোনট মিশন ট্রেইনার • নাসা স্পেস অ্যাপস চ্যালেঞ্জ ২০২৬",
+        btnAbout: "ℹ️ নাসা ডেটা ও বিজ্ঞান তথ্য",
+        btnAi: "🤖 এআই ব্যবহারের ঘোষণা",
+        pill1: "১. আউটপোস্ট সেটআপ",
+        pill2: "২. পাওয়ার ব্যালেন্সিং",
+        pill3: "৩. সৌরঝড় ইমার্জেন্সি",
+        welcomeTitle: "স্বাগতম ক্যাডেট কমান্ডার!",
+        welcomeText: "মঙ্গল গ্রহে মানবজাতির প্রথম স্থায়ী আউটপোস্ট স্থাপিত হচ্ছে।<br>নাসার বাস্তব পরিবেশগত ডেটা ব্যবহার করে লাইফ সাপোর্ট, বিদ্যুৎ বাজেট এবং রেডিয়েশন শিল্ডের ভারসাম্য রক্ষা করাই তোমার মিশন। তুমি কি দলকে নিরাপদে বাঁচাতে পারবে?",
+        startBtn: "মিশন শুরু করো ➔",
+        step1Title: "ধাপ ১: আউটপোস্টের মূল প্রযুক্তি নির্বাচন",
+        step1Note: "পৃথিবীর সাধারণ যন্ত্রপাতি মহাকাশে কাজ করে না! জীবন বাঁচানোর জন্য <b>৩টি সঠিক প্রযুক্তি</b> নির্বাচন করো:",
+        subCount: "সিস্টেম চালু হয়েছে: ",
+        step2Title: "ধাপ ২: ১০০ কিলোওয়াট সারফেস রিঅ্যাক্টর ব্যালেন্সিং ইঞ্জিন",
+        step2Note: "<b>বাস্তব ইঞ্জিনিয়ারিং সীমাবদ্ধতা:</b> রিঅ্যাক্টরের মোট বিদ্যুৎ ক্ষমতা নির্দিষ্ট <b>১০০ kW</b>। একটিতে বিদ্যুৎ বাড়ালে অন্যটি বন্ধ হয়ে যাবে!",
+        siteLabel: "📡 স্থান: মঙ্গল গ্রহের এলিসিয়াম প্ল্যানিশিয়া",
+        gridDemandLabel: "ব্যবহৃত মোট বিদ্যুৎ:",
+        sO2: "🫁 লাইফ সাপোর্ট (অক্সিজেন):",
+        sShield: "🛡️ রেডিয়েশন শিল্ড:",
+        sFood: "🌱 খাদ্য উৎপাদন খামার:",
+        mO2: "অক্সিজেন সরবরাহ",
+        mShield: "রেডিয়েশন সুরক্ষা",
+        mFood: "শস্য উৎপাদন",
+        mStatus: "গ্রিড স্ট্যাটাস",
+        step2Btn: "ব্যালেন্স নিশ্চিত করে ইমার্জেন্সি মিশনে যাও ➔",
+        step3Title: "ধাপ ৩: সৌরঝড় ইমার্জেন্সি রিব্যালেন্সিং",
+        step3Note: "<b>সতর্কতা:</b> সোলার প্যানেল ক্ষতিগ্রস্ত হয়েছে! জরুরি ব্যাটারিতে মাত্র <b>৫০ kW বিদ্যুৎ</b> অবশিষ্ট আছে। অক্সিজেন ও শিল্ড সচল রেখে টিকে থাকো!",
+        crisisFlux: "তীব্রতা: S2 সোলার প্রোটন ঝড়",
+        crisisGridLabel: "জরুরি ব্যাটারি গ্রিড:",
+        crisisBtn: "ইমার্জেন্সি ব্যালেন্স লক করে ফলাফল দেখো ➔",
+        inputTitle: "🌟 অসাধারণ! তুমি আউটপোস্টকে রক্ষা করেছো! 🌟",
+        inputSub: "তোমার অফিশিয়াল কমান্ডার ফ্লাইট ডিপ্লোমার জন্য নাম লেখো:",
+        genDipBtn: "অফিশিয়াল ডিপ্লোমা তৈরি করো 🎓",
+        dipHeader: "আউটপোস্ট কমান্ড ডিপ্লোমা",
+        dipSub: "অ্যাস্ট্রনেক্সা মিশন একাডেমি • জুনিয়র অ্যাস্ট্রোনট মিশন ট্রেইনার • NASA SPACE APPS 2026",
+        dipCertify: "প্রত্যয়ন করা যাচ্ছে যে সফল ক্যাডেট কমান্ডার",
+        dipBody: "নাসা ইনসাইট ও ডনকির পরিবেশগত টেলিমেট্রি ব্যবহারের মাধ্যমে লাইফ সাপোর্ট, রেগোলিথ শিল্ডিং এবং ১০০ কিলোওয়াট ফিশন পাওয়ার গ্রিডের জটিল ইঞ্জিনিয়ারিং ট্রেড-অফ দক্ষতা সফলভাবে প্রদর্শন করেছে।",
+        sig1: "ফ্লাইট ডিরেক্টর",
+        sig2: "গ্লোবাল ইভেন্ট লোকেশন",
+        sig3: "টিম লিডার",
+        dipDisclaimer: "* শিক্ষামূলক সিমুলেশন ডিপ্লোমা • নাসা স্পেস অ্যাপস চ্যালেঞ্জ ২০২৬ প্রজেক্ট • এটি কোনো অফিশিয়াল সরকারি সার্টিফিকেট নয়।",
+        printBtn: "🖨️ প্রিন্ট / PDF হিসেবে সেভ করো",
+        modalDataTitle: "📡 নাসার উন্মুক্ত ডেটা ও বৈজ্ঞানিক তথ্য",
+        modalDataP: "এই সিমুলেটরটিতে কোনো কাল্পনিক সংখ্যা নয়, বরং নাসার বাস্তব মিশনের ডেটা ব্যবহৃত হয়েছে:",
+        modalAiTitle: "🤖 অফিশিয়াল এআই (AI) ব্যবহারের বিবরণী",
+        modalAiP: "নাসা স্পেস অ্যাপস ২০২৬ এবং মেন্টরের নির্দেশনা অনুযায়ী স্বচ্ছ ঘোষণা:",
+        closeBtn: "বন্ধ করো",
+        footCite: "নাসার উন্মুক্ত ডেটা সাইটেশন:"
+      }
+    };
+
+    const GEAR_DATA = [
+      {
+        id: 'regolith',
+        correct: true,
+        en: { title: "Regolith Radiation Shield", sub: "Planetary rock soil barrier (Blocks radiation)", log: "Sintered Regolith Shield: Heavy Moon/Mars soil blocks space radiation and micrometeorites." },
+        bn: { title: "রেগোলিথ রেডিয়েশন শিল্ড", sub: "গ্রহের মাটির সুরক্ষাবলয় (তেজস্ক্রিয়তা ঠেকায়)", log: "রেগোলিথ শিল্ড: চাঁদ ও মঙ্গলের ভারী মাটি মহাজাগতিক ক্ষতিকর রশ্মি ও উল্কাপাত প্রতিরোধ করে।" }
+      },
+      {
+        id: 'glass',
+        correct: false,
+        en: { title: "Standard Earth Greenhouse", sub: "Fragile glass garden", log: "Glass Greenhouse: Standard Earth glass shatters immediately under micro-meteoroids and low atmospheric pressure." },
+        bn: { title: "পৃথিবীর কাচের গ্রিনহাউস", sub: "ভঙ্গুর কাচের বাগানঘর", log: "কাচের গ্রিনহাউস: মহাকাশের শূন্য চাপ ও উল্কাপাতের আঘাতে কাচ মুহূর্তে ভেঙে চুরমার হবে!" }
+      },
+      {
+        id: 'fsp',
+        correct: true,
+        en: { title: "Fission Surface Power (FSP) Reactor", sub: "Continuous 40-100 kW fission energy", log: "FSP Nuclear Unit: 40–100 kW continuous fission power designed to run through freezing 14-day lunar nights." },
+        bn: { title: "এফএসপি পারমাণবিক রিঅ্যাক্টর", sub: "টানা ৪০–১০০ কিলোওয়াট বিদ্যুৎ", log: "এফএসপি রিঅ্যাক্টর: নাসার পারমাণবিক প্রযুক্তি যা কনকনে ঠান্ডায় টানা ১৪ দিনের লুনার রাতেও অবিরাম বিদ্যুৎ দেয়।" }
+      },
+      {
+        id: 'diesel',
+        correct: false,
+        en: { title: "Diesel Fuel Generator", sub: "Fuel combustion engine", log: "Diesel Engine: Combustion engines cannot start in space because there is zero free oxygen in the atmosphere." },
+        bn: { title: "ডিজেল ফুয়েল জেনারেটর", sub: "দহন ইঞ্জিন জেনারেটর", log: "ডিজেল জেনারেটর: চাঁদ বা মঙ্গলে মুক্ত অক্সিজেন না থাকায় আগুন জ্বলে ইঞ্জিন চালু হওয়া অসম্ভব!" }
+      },
+      {
+        id: 'algae',
+        correct: true,
+        en: { title: "Closed-Loop Hydroponic Bay", sub: "Recycled oxygen & food growth", log: "Closed-Loop Bioreactor: Recycles water and uses algae to produce fresh oxygen and edible biomass." },
+        bn: { title: "ক্লোজড-লুপ হাইড্রোপনিক খামার", sub: "অক্সিজেন ও খাদ্য উৎপাদন", log: "হাইড্রোপনিক খামার: শৈবাল ও পানি রিসাইকেল করে একটানা তাজা অক্সিজেন ও খাবার তৈরি করে।" }
+      },
+      {
+        id: 'cans',
+        correct: false,
+        en: { title: "Ration Cans Only", sub: "Non-renewable food supply", log: "Food Rations Only: Shipping pre-packaged food from Earth is too heavy and runs out after several months." },
+        bn: { title: "শুধু প্যাকেটজাত খাবার ক্যান", sub: "সীমিত সরবরাহ (ফুরিয়ে যাবে)", log: "খাবারের ক্যান: পৃথিবী থেকে খাবার নিয়ে যাওয়া অত্যন্ত ব্যয়বহুল এবং কয়েক মাস পর তা ফুরিয়ে যাবে।" }
+      }
+    ];
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'bn' : 'en';
+      applyLanguage();
     }
 
-    function switchModule(index) {
-      currentModule = index;
-      const cards = document.querySelectorAll('.module-card');
-      const tabs = document.querySelectorAll('.tab-btn');
-      
-      cards.forEach((c, i) => c.classList.toggle('active', i === index));
-      tabs.forEach((t, i) => t.classList.toggle('active', i === index));
+    function applyLanguage() {
+      const dict = I18N[currentLang];
+      document.getElementById('langToggleBtn').innerText = dict.toggleBtn;
 
-      if (index === 0) setProgress(25);
-      if (index === 1) {
-        setProgress(60);
-        fetchMarsData();
-      }
-      if (index === 2) {
-        setProgress(85);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+
+      renderSubsystems();
+      updateModalsContent();
+      runGridSimulation();
+      runCrisisSimulation();
+    }
+
+    function updateModalsContent() {
+      const dList = document.getElementById('modalDataList');
+      const aList = document.getElementById('modalAiList');
+
+      if (currentLang === 'en') {
+        dList.innerHTML = `
+          <li><b>Mars Environmental Telemetry:</b> Mars Insight Lander TWINS archive (Sol 500 surface temp -63°C, atmospheric pressure ~720 Pa, and daytime solar insolation 590 W/m² at Elysium Planitia, 4.5°N 135.6°E).</li>
+          <li><b>Fission Surface Power (FSP):</b> NASA's FSP Project baseline, sizing surface fission power systems at 40–100 kW continuous electric capacity to survive extreme diurnal cycles.</li>
+          <li><b>Solar Energetic Particle (SEP) Weather:</b> NASA DONKI database solar event records (#2024-05-11T02:00:00-SEP-001) modeling proton radiation spikes exceeding nominal background levels.</li>
+          <li><b>Life Support & Shielding:</b> Sintered regolith shielding mass and closed-loop bio-regenerative oxygen/crop trade-offs from NASA Human Research Program (HRP) publications.</li>
+        `;
+        aList.innerHTML = `
+          <li><b>AI Assistance Used:</b> Claude (Anthropic) and Gemini (Google) were utilized for rapid HTML/CSS UI scaffolding, code refactoring, and educational language simplification.</li>
+          <li><b>Original Team Work:</b> The engineering trade-off logic, system constraints (100 kW FSP baseline and 50 kW emergency cut), mission sequence, NASA data correlation, and presentation design were conceived, reviewed, and finalized by Team ASTRONEXA.</li>
+        `;
+      } else {
+        dList.innerHTML = `
+          <li><b>মঙ্গলের পরিবেশগত টেলিমেট্রি:</b> নাসা ইনসাইট ল্যান্ডারের TWINS আর্কাইভ (সল ৫০০-তে ভূপৃষ্ঠের তাপমাত্রা -৬৩°C, বায়ুচাপ ~৭২০ Pa এবং সৌর বিকিরণ ৫৯০ W/m²)।</li>
+          <li><b>ফিশন সারফেস পাওয়ার (FSP):</b> নাসার অফিসিয়াল এফএসপি প্রকল্প, যা মঙ্গলের চরম রাতে একটানা ৪০–১০০ কিলোওয়াট বিদ্যুৎ দেয়।</li>
+          <li><b>সৌরঝড় ও তেজস্ক্রিয়তা (DONKI):</b> নাসা ডনকি ডাটাবেসের সোলার প্রোটন ইভেন্ট (#2024-05-11T02:00:00-SEP-001) যা মহাকাশের মারাত্মক রেডিয়েশন পরিস্থিতি ফুটিয়ে তোলে।</li>
+          <li><b>লাইফ সাপোর্ট ও শিল্ডিং:</b> রেগোলিথ মাটির আস্তরণ এবং নাসার হিউম্যান রিসার্চ প্রোগ্রাম (HRP) গবেষণা অনুযায়ী অক্সিজেনের হিসাব।</li>
+        `;
+        aList.innerHTML = `
+          <li><b>ব্যবহৃত এআই সহায়তা:</b> ক্লড (Claude) এবং জেমিনি (Gemini) মূলত এইচটিএমএল/সিএসএস কাঠামো সাজাতে ও কোড দ্রুত পরিমার্জনে সাহায্য করেছে।</li>
+          <li><b>দলের নিজস্ব উদ্ভাবন:</b> ইঞ্জিনিয়ারিং ট্রেড-অফ লজিক, ১০০ কিলোওয়াট ও ৫০ কিলোওয়াট পাওয়ার সীমাবদ্ধতা, নাসার ডেটাসেট নির্বাচন এবং সম্পূর্ণ ইন্টারঅ্যাক্টিভ গেমপ্লে টিম অ্যাস্ট্রনেক্সার নিজস্ব মেধা ও পরিকল্পনায় প্রস্তুত।</li>
+        `;
       }
     }
 
-    // MODULE 1: Outpost Architecture Logic
-    let correctGearFound = 0;
-    function selectGear(element, isCorrect, detailText) {
-      const feedback = document.getElementById('gearFeedback');
-      feedback.style.display = 'block';
+    let currentStep = 0;
+    let unlockedStep = 1;
 
-      if(isCorrect) {
-        if(!element.classList.contains('selected-correct')) {
-          element.classList.add('selected-correct');
-          correctGearFound++;
-          feedback.style.background = 'rgba(34, 197, 94, 0.2)';
-          feedback.style.color = '#4ade80';
-          feedback.style.border = '1px solid #22c55e';
-          feedback.innerHTML = `✅ DEPLOYED: ${detailText}`;
-          document.getElementById('gearProgress').innerText = `Subsystems Initialized: ${correctGearFound} / 3`;
-          
-          if(correctGearFound === 3) {
-            feedback.innerHTML += "<br>🚀 <b>All Essential Outpost Subsystems Live! Transitioning to Trade-off Simulator in 1.5s...</b>";
-            setProgress(50);
-            setTimeout(() => { switchModule(1); }, 1500);
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    function startCadetMission() {
+      document.getElementById('step0').style.display = 'none';
+      document.getElementById('stepsNav').style.display = 'flex';
+      setStep(1);
+    }
+
+    function setStep(stepNum) {
+      if (stepNum > unlockedStep) return;
+      currentStep = stepNum;
+
+      document.querySelectorAll('.card').forEach((c, i) => {
+        if(i > 0) c.style.display = 'none';
+      });
+
+      document.getElementById('step' + stepNum).style.display = 'block';
+
+      for(let i = 1; i <= 3; i++) {
+        const pill = document.getElementById('pill' + i);
+        pill.classList.remove('active');
+        if(i <= unlockedStep) {
+          pill.classList.add('unlocked');
+        } else {
+          pill.classList.remove('unlocked');
+        }
+        if(i === stepNum) pill.classList.add('active');
+      }
+    }
+
+    let correctSystemsCount = 0;
+    let selectedSet = new Set();
+
+    function renderSubsystems() {
+      const grid = document.getElementById('subsystemGrid');
+      grid.innerHTML = '';
+
+      GEAR_DATA.forEach((gear) => {
+        const card = document.createElement('div');
+        const langData = gear[currentLang];
+        const isSelected = selectedSet.has(gear.id);
+
+        card.className = 'gear-card' + (isSelected ? ' selected-correct' : '');
+        card.innerHTML = `
+          <b>${gear.correct ? '🛡️ ' : (gear.id === 'glass' ? '🏡 ' : (gear.id === 'diesel' ? '⛽ ' : '🥫 '))} ${langData.title}</b><br>
+          <small style="color:#94a3b8;">${langData.sub}</small>
+        `;
+
+        card.onclick = function() {
+          selectSubsystem(card, gear);
+        };
+
+        grid.appendChild(card);
+      });
+
+      document.getElementById('subsystemCount').innerText = `${I18N[currentLang].subCount} ${correctSystemsCount} / 3`;
+    }
+
+    function selectSubsystem(elem, gear) {
+      const log = document.getElementById('subsystemLog');
+      log.style.display = 'block';
+      const langData = gear[currentLang];
+
+      if(gear.correct) {
+        if(!selectedSet.has(gear.id)) {
+          selectedSet.add(gear.id);
+          elem.classList.add('selected-correct');
+          correctSystemsCount++;
+          log.style.background = 'rgba(34, 197, 94, 0.2)';
+          log.style.color = '#4ade80';
+          log.style.border = '1px solid #22c55e';
+          log.innerHTML = `✅ <b>DEPLOYED:</b> ${langData.log}`;
+          document.getElementById('subsystemCount').innerText = `${I18N[currentLang].subCount} ${correctSystemsCount} / 3`;
+
+          if(correctSystemsCount === 3) {
+            log.innerHTML += currentLang === 'en' 
+              ? "<br>🚀 <b>All Essential Architecture Verified! Unlocking 100 kW Reactor Grid in 1.5s...</b>"
+              : "<br>🚀 <b>সব প্রযুক্তি সচল হয়েছে! ১০০ কিলোওয়াট রিঅ্যাক্টর আনলক হচ্ছে...</b>";
+            unlockedStep = 2;
+            setTimeout(() => { setStep(2); }, 1500);
           }
         }
       } else {
-        element.classList.add('selected-wrong');
-        feedback.style.background = 'rgba(239, 68, 68, 0.2)';
-        feedback.style.color = '#f87171';
-        feedback.style.border = '1px solid #ef4444';
-        feedback.innerHTML = `⚠️ ENGINEERING FAILURE: ${detailText}`;
-        setTimeout(() => element.classList.remove('selected-wrong'), 1500);
+        elem.classList.add('selected-wrong');
+        log.style.background = 'rgba(239, 68, 68, 0.2)';
+        log.style.color = '#f87171';
+        log.style.border = '1px solid #ef4444';
+        log.innerHTML = `⚠️ <b>${currentLang === 'en' ? 'ENGINEERING FAILURE:' : 'ইঞ্জিনিয়ারিং ত্রুটি:'}</b> ${langData.log}`;
+        setTimeout(() => elem.classList.remove('selected-wrong'), 1600);
       }
     }
 
-    // MODULE 2: Live NASA Mars Telemetry & Balancing Engine
-    function fetchMarsData() {
-      document.getElementById('marsWeatherVal').innerText = "LIVE: Temp -62°C | Rad: 0.24 mGy/d | Press: 610 Pa";
-    }
-
-    function balanceResources() {
+    function runGridSimulation() {
       const o2 = parseInt(document.getElementById('o2Slider').value);
       const shield = parseInt(document.getElementById('shieldSlider').value);
       const food = parseInt(document.getElementById('foodSlider').value);
 
-      document.getElementById('o2Val').innerText = o2 + " kW";
-      document.getElementById('shieldVal').innerText = shield + " kW";
-      document.getElementById('foodVal').innerText = food + " kW";
+      document.getElementById('o2Kw').innerText = o2 + " kW";
+      document.getElementById('shieldKw').innerText = shield + " kW";
+      document.getElementById('foodKw').innerText = food + " kW";
 
-      const totalPower = o2 + shield + food;
-      const powerStatusEl = document.getElementById('powerStatus');
-      const simLog = document.getElementById('simLog');
-      const baseMeter = document.getElementById('baseMeter');
+      const total = o2 + shield + food;
+      const demandEl = document.getElementById('gridDemand');
+      const adviceEl = document.getElementById('gridAdvice');
+      const statusEl = document.getElementById('gridStatus');
+      const nextBtn = document.getElementById('step2NextBtn');
 
-      powerStatusEl.innerText = `${totalPower} kW / 100 kW`;
+      demandEl.innerText = `${total} kW / 100 kW`;
 
-      if (totalPower > 100) {
-        powerStatusEl.style.color = '#ef4444';
-        baseMeter.innerText = 'OVERLOAD';
-        baseMeter.style.color = '#ef4444';
-        simLog.innerHTML = '⚠️ <b>GRID OVERLOAD!</b> Subsystem demand exceeds 100 kW reactor capacity. Reduce usage!';
-        simLog.style.color = '#ef4444';
-        document.getElementById('lockTradeoffBtn').disabled = true;
+      const o2Pct = Math.min(100, Math.round(o2 * 2.5));
+      const shieldPct = Math.min(100, Math.round(shield * 2.5));
+      const foodPct = Math.min(100, Math.round(food * 2.8));
+
+      document.getElementById('o2Meter').innerText = o2Pct + '%';
+      document.getElementById('shieldMeter').innerText = shieldPct + '%';
+      document.getElementById('foodMeter').innerText = foodPct + '%';
+
+      if (total > 100) {
+        demandEl.style.color = '#ef4444';
+        statusEl.innerText = currentLang === 'en' ? 'OVERLOAD' : 'ওভারলোড';
+        statusEl.style.color = '#ef4444';
+        adviceEl.innerHTML = currentLang === 'en'
+          ? '⚠️ <b>GRID OVERLOAD!</b> Subsystem demand exceeds 100 kW reactor capacity. Reduce usage!'
+          : '⚠️ <b>রিঅ্যাক্টর ওভারলোড!</b> ১০০ কিলোওয়াটের অতিরিক্ত বিদ্যুৎ ব্যবহার হচ্ছে। লোড কমাও!';
+        adviceEl.style.color = '#ef4444';
+        nextBtn.disabled = true;
+      } else if (total < 95) {
+        demandEl.style.color = '#38bdf8';
+        statusEl.innerText = currentLang === 'en' ? 'UNDER-UTILIZED' : 'অব্যবহৃত';
+        statusEl.style.color = '#38bdf8';
+        adviceEl.innerHTML = currentLang === 'en'
+          ? 'ℹ️ Reactor capacity is idle. Allocate full 100 kW to maximize outpost safety.'
+          : 'ℹ️ বিদ্যুৎ অবশিষ্ট আছে। সর্বোচ্চ সুরক্ষার জন্য সম্পূর্ণ ১০০ কিলোওয়াট বিদ্যুৎ বণ্টন করো।';
+        adviceEl.style.color = '#38bdf8';
+        nextBtn.disabled = true;
       } else {
-        powerStatusEl.style.color = '#22c55e';
-        document.getElementById('o2Meter').innerText = Math.min(100, Math.round(o2 * 2.5)) + '%';
-        document.getElementById('shieldMeter').innerText = Math.min(100, Math.round(shield * 2.5)) + '%';
-        document.getElementById('foodMeter').innerText = Math.min(100, Math.round(food * 2.8)) + '%';
-
-        if (o2 < 20 || shield < 20 || food < 15) {
-          baseMeter.innerText = 'HAZARD';
-          baseMeter.style.color = '#eab308';
-          simLog.innerHTML = '⚠️ Warning: One or more life-support metrics dropped into critical deficiency!';
-          simLog.style.color = '#eab308';
-          document.getElementById('lockTradeoffBtn').disabled = false;
+        if (o2Pct < 75 || shieldPct < 75 || foodPct < 70) {
+          demandEl.style.color = '#eab308';
+          statusEl.innerText = currentLang === 'en' ? 'DEFICIENT' : 'ঘাটতি';
+          statusEl.style.color = '#eab308';
+          adviceEl.innerHTML = currentLang === 'en'
+            ? '⚠️ One system has received too little power! Balance evenly to prevent starvation.'
+            : '⚠️ যেকোনো একটি সিস্টেমে বিদ্যুৎ বিপজ্জনকভাবে কমে গেছে! নিরাপদ মাত্রায় ব্যালেন্স করো।';
+          adviceEl.style.color = '#eab308';
+          nextBtn.disabled = true;
         } else {
-          baseMeter.innerText = 'OPTIMAL';
-          baseMeter.style.color = '#22c55e';
-          simLog.innerHTML = '✅ <b>PERFECT TRADE-OFF!</b> All outpost demands balanced within safe operational tolerances.';
-          simLog.style.color = '#22c55e';
-          document.getElementById('lockTradeoffBtn').disabled = false;
+          demandEl.style.color = '#22c55e';
+          statusEl.innerText = currentLang === 'en' ? 'OPTIMAL' : 'নিখুঁত';
+          statusEl.style.color = '#22c55e';
+          adviceEl.innerHTML = currentLang === 'en'
+            ? '✅ <b>PERFECT TRADE-OFF!</b> 100 kW balanced safely across all life support needs.'
+            : '✅ <b>নিখুঁত ট্রেড-অফ!</b> ১০০ কিলোওয়াট বিদ্যুৎ সঠিকভাবে লাইফ সাপোর্টে বণ্টন হয়েছে।';
+          adviceEl.style.color = '#22c55e';
+          nextBtn.disabled = false;
         }
       }
     }
 
-    // MODULE 3: Flight Director Crisis Resolution
-    function resolveCrisis(isSuccess, message) {
-      if(isSuccess) {
-        alert("CRISIS RESOLVED: " + message);
-        document.getElementById('crisisCard').style.display = 'none';
-        document.getElementById('nameModal').style.display = 'block';
+    function goToEmergencyCrisis() {
+      unlockedStep = 3;
+      setStep(3);
+      runCrisisSimulation();
+    }
+
+    function runCrisisSimulation() {
+      const eo2 = parseInt(document.getElementById('eO2').value);
+      const eshield = parseInt(document.getElementById('eShield').value);
+      const efood = parseInt(document.getElementById('eFood').value);
+
+      document.getElementById('eO2Kw').innerText = eo2 + " kW";
+      document.getElementById('eShieldKw').innerText = eshield + " kW";
+      document.getElementById('eFoodKw').innerText = efood + " kW";
+
+      const total = eo2 + eshield + efood;
+      const demandEl = document.getElementById('emergencyDemand');
+      const textEl = document.getElementById('crisisStatusText');
+      const btn = document.getElementById('crisisSaveBtn');
+
+      demandEl.innerText = `${total} kW / 50 kW`;
+
+      if (total > 50) {
+        demandEl.style.color = '#ef4444';
+        textEl.style.color = '#f87171';
+        textEl.innerHTML = currentLang === 'en'
+          ? '⚠️ <b>POWER DRAIN:</b> Emergency battery drained beyond 50 kW! Outpost blacking out.'
+          : '⚠️ <b>ব্যাটারি ড্রেইন:</b> ৫০ কিলোওয়াটের চেয়ে বেশি লোড দেওয়া হয়েছে! ব্যাটারি বন্ধ হয়ে যাবে।';
+        btn.disabled = true;
+      } else if (eshield < 22) {
+        demandEl.style.color = '#eab308';
+        textEl.style.color = '#f87171';
+        textEl.innerHTML = currentLang === 'en'
+          ? '❌ <b>SHIELD FAILURE:</b> Radiation shield needs at least 22 kW to stop solar protons!'
+          : '❌ <b>শিল্ড ফেইলিউর:</b> সৌরঝড় প্রতিহত করতে রেডিয়েশন শিল্ডে ন্যূনতম ২২ কিলোওয়াট প্রয়োজন!';
+        btn.disabled = true;
+      } else if (eo2 < 18) {
+        demandEl.style.color = '#eab308';
+        textEl.style.color = '#f87171';
+        textEl.innerHTML = currentLang === 'en'
+          ? '❌ <b>HYPOXIA WARNING:</b> Life support needs at least 18 kW baseline oxygen flow!'
+          : '❌ <b>অক্সিজেন সংকট:</b> লাইফ সাপোর্ট সচল রাখতে ন্যূনতম ১৮ কিলোওয়াট বিদ্যুৎ প্রয়োজন!';
+        btn.disabled = true;
       } else {
-        alert("MISSION FAILED: " + message + " Try a different trade-off!");
+        demandEl.style.color = '#22c55e';
+        textEl.style.color = '#4ade80';
+        textEl.innerHTML = currentLang === 'en'
+          ? '✅ <b>OPTIMAL CRISIS TRADE-OFF:</b> Crops dimmed for 48h while shield deflects solar particle storm!'
+          : '✅ <b>সঠিক ট্রেড-অফ সিদ্ধান্ত:</b> ৪৮ ঘণ্টার জন্য আলো নিভিয়ে খাবার বাঁচানো হলো এবং সৌরঝড় রুখে দেওয়া সম্ভব হলো!';
+        btn.disabled = false;
       }
     }
 
-    function generateCertificate() {
-      const inputVal = document.getElementById('cadetNameInput').value;
-      const cadetName = inputVal && inputVal.trim() !== "" ? inputVal.trim() : "Commander Explorer";
-      document.getElementById('certCadetName').innerText = cadetName;
-      document.getElementById('nameModal').style.display = 'none';
-      document.getElementById('certificateWrapper').style.display = 'block';
-      setProgress(100);
+    function resolveCrisisSuccess() {
+      document.getElementById('crisisControls').style.display = 'none';
+      document.getElementById('step3Input').style.display = 'block';
     }
 
-    // Init
-    balanceResources();
-    setProgress(25);
+    function renderOfficialDiploma() {
+      const name = document.getElementById('cadetName').value.trim() || (currentLang === 'en' ? 'Cadet Commander Explorer' : 'ক্যাডেট কমান্ডার অভিযাত্রী');
+      document.getElementById('dispCadetName').innerText = name;
+      document.getElementById('step3Input').style.display = 'none';
+      document.getElementById('step3Diploma').style.display = 'block';
+    }
+
+    // LIVE TICKING MARS CLOCK & TELEMETRY
+    let marsSeconds = 8;
+    let marsMinutes = 24;
+    let marsHours = 14;
+
+    function tickMarsClock() {
+      marsSeconds++;
+      if (marsSeconds >= 60) { marsSeconds = 0; marsMinutes++; }
+      if (marsMinutes >= 60) { marsMinutes = 0; marsHours++; }
+      if (marsHours >= 25) { marsHours = 0; }
+
+      const pad = (n) => String(n).padStart(2, '0');
+      const timeStr = `${pad(marsHours)}:${pad(marsMinutes)}:${pad(marsSeconds)} MTC`;
+      const clockEl = document.getElementById('marsLiveClock');
+      if (clockEl) clockEl.innerText = `SOL 500 • ${timeStr}`;
+    }
+    setInterval(tickMarsClock, 1000);
+
+    function fluctuateTelemetry() {
+      const temp = (-63.0 + (Math.random() * 0.4 - 0.2)).toFixed(1);
+      const press = Math.round(720 + (Math.random() * 4 - 2));
+      const flux = Math.round(590 + (Math.random() * 4 - 2));
+      const el = document.getElementById('marsDynamicTelemetry');
+      if (el) {
+        el.innerText = `Temp ${temp}°C | Press ${press} Pa | ${flux} W/m²`;
+      }
+    }
+    setInterval(fluctuateTelemetry, 3500);
+
+    function syncNASAData() {
+      const el = document.getElementById('marsDynamicTelemetry');
+      if (!el) return;
+      const originalText = el.innerText;
+      el.innerText = "Connecting to NASA InSight API...";
+      el.style.color = "#fdba74";
+
+      setTimeout(() => {
+        el.innerText = "Telemetry Synced • Verified Sol 500 Cache Active";
+        el.style.color = "#4ade80";
+        setTimeout(() => {
+          el.style.color = "#38bdf8";
+          fluctuateTelemetry();
+        }, 2200);
+      }, 700);
+    }
+
+    applyLanguage();
   </script>
 </body>
 </html>
