@@ -5,7 +5,7 @@
 ---
 
 ### 🌐 Live Links
-* **Interactive Simulator (Live Web App):** [Launch ASTRONEXA Mission Academy](https://kahharbd.github.io/astronexa-mission-academy/)
+* **Interactive Simulator (Live Web App):** [Launch ASTRONEXA Mission Academy](https://github.com/kahharbd/astronexa-mission-academy)
 * **4-Minute Project Demonstration Video:** [Watch on YouTube](https://youtu.be/twLYQn5Rpn4)
 
 ---
